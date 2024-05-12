@@ -9,14 +9,24 @@
 set -e -u
 
 source /app/bash-simplify/_importBSFn.sh
+_importBSFn "cdCurScriptDir.sh"
+_importBSFn "git_Clone_SwitchTag.sh"
 _importBSFn "arg1EqNMsg.sh"
 
 
 
 function link_NlohmannJson_includeDir_to() {
+local REPO_HOME="/app/nlohmann--json"
+local NlohmannJson_IncDir="$REPO_HOME/include/nlohmann/"
+
+#到当前目录
+cdCurScriptDir
+
+#克隆本仓库
+git_Clone_SwitchTag http://giteaz:3000/util/nlohmann--json.git tag__10.0.0 $REPO_HOME
+
     local exitCode_OK=0
     local errCode1=81
-    local NlohmannJson_IncDir="/app/nlohmann--json/include/nlohmann/"
 
     arg1EqNMsg $# 1 '断言失败，需要1个参数' || return $?
     # set -x
